@@ -413,10 +413,10 @@ Wire Wire Line
 	8700 950  8700 1150
 Connection ~ 8350 1900
 $Comp
-L Transistor_BJT:BC548 Q?
+L Transistor_BJT:BC548 Q1
 U 1 1 5DE42A41
 P 8100 2350
-F 0 "Q?" H 8291 2396 50  0000 L CNN
+F 0 "Q1" H 8291 2396 50  0000 L CNN
 F 1 "BC548" H 8291 2305 50  0000 L CNN
 F 2 "Package_TO_SOT_THT:TO-92_Inline" H 8300 2275 50  0001 L CIN
 F 3 "http://www.fairchildsemi.com/ds/BC/BC547.pdf" H 8100 2350 50  0001 L CNN
@@ -515,8 +515,8 @@ L Device:R R?
 U 1 1 5DFA145B
 P 8500 5400
 AR Path="/5DE1DFF6/5DFA145B" Ref="R?"  Part="1" 
-AR Path="/5DE2A82E/5DFA145B" Ref="R?"  Part="1" 
-F 0 "R?" H 8570 5446 50  0000 L CNN
+AR Path="/5DE2A82E/5DFA145B" Ref="R98"  Part="1" 
+F 0 "R98" H 8570 5446 50  0000 L CNN
 F 1 "10K" H 8570 5355 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 8430 5400 50  0001 C CNN
 F 3 "~" H 8500 5400 50  0001 C CNN
@@ -539,8 +539,8 @@ L Device:R R?
 U 1 1 5DFA8AD3
 P 8250 5650
 AR Path="/5DE1DFF6/5DFA8AD3" Ref="R?"  Part="1" 
-AR Path="/5DE2A82E/5DFA8AD3" Ref="R?"  Part="1" 
-F 0 "R?" V 8150 5550 50  0000 L CNN
+AR Path="/5DE2A82E/5DFA8AD3" Ref="R97"  Part="1" 
+F 0 "R97" V 8150 5550 50  0000 L CNN
 F 1 "220" V 8350 5550 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 8180 5650 50  0001 C CNN
 F 3 "~" H 8250 5650 50  0001 C CNN
@@ -559,10 +559,10 @@ F 3 "" H 9150 5150 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:C C?
+L Device:C C4
 U 1 1 5DFB7332
 P 8500 5900
-F 0 "C?" H 8615 5946 50  0000 L CNN
+F 0 "C4" H 8615 5946 50  0000 L CNN
 F 1 "100n-25V" H 8615 5855 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm" H 8538 5750 50  0001 C CNN
 F 3 "~" H 8500 5900 50  0001 C CNN
@@ -580,10 +580,10 @@ Wire Wire Line
 Wire Wire Line
 	9550 4650 9350 4650
 $Comp
-L Connector_Generic:Conn_01x05 J?
+L Connector_Generic:Conn_01x05 J1
 U 1 1 5DDF0B46
 P 9750 4850
-F 0 "J?" H 9700 5200 50  0000 L CNN
+F 0 "J1" H 9700 5200 50  0000 L CNN
 F 1 "DNP" H 9700 4500 50  0000 L CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical" H 9750 4850 50  0001 C CNN
 F 3 "~" H 9750 4850 50  0001 C CNN
@@ -591,10 +591,10 @@ F 3 "~" H 9750 4850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0106
 U 1 1 5DDF5E99
 P 3800 5850
-F 0 "#PWR?" H 3800 5600 50  0001 C CNN
+F 0 "#PWR0106" H 3800 5600 50  0001 C CNN
 F 1 "GND" H 3805 5677 50  0000 C CNN
 F 2 "" H 3800 5850 50  0001 C CNN
 F 3 "" H 3800 5850 50  0001 C CNN
@@ -613,10 +613,10 @@ Connection ~ 3800 5750
 Wire Wire Line
 	3800 3650 3900 3650
 $Comp
-L Device:C C?
+L Device:C C1
 U 1 1 5DE05CC3
 P 4300 3000
-F 0 "C?" H 4415 3046 50  0000 L CNN
+F 0 "C1" H 4415 3046 50  0000 L CNN
 F 1 "100n-25V" H 4350 2900 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm" H 4338 2850 50  0001 C CNN
 F 3 "~" H 4300 3000 50  0001 C CNN
@@ -624,10 +624,10 @@ F 3 "~" H 4300 3000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C?
+L Device:C C2
 U 1 1 5DDF165E
 P 4850 3000
-F 0 "C?" H 4965 3046 50  0000 L CNN
+F 0 "C2" H 4965 3046 50  0000 L CNN
 F 1 "1u-25V" H 4900 2900 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm" H 4888 2850 50  0001 C CNN
 F 3 "~" H 4850 3000 50  0001 C CNN
@@ -635,10 +635,10 @@ F 3 "~" H 4850 3000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C?
+L Device:C C3
 U 1 1 5DDF2D76
 P 5350 3000
-F 0 "C?" H 5465 3046 50  0000 L CNN
+F 0 "C3" H 5465 3046 50  0000 L CNN
 F 1 "10u-25V" H 5400 2900 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm" H 5388 2850 50  0001 C CNN
 F 3 "~" H 5350 3000 50  0001 C CNN
@@ -689,10 +689,10 @@ F 3 "~" H 1900 2900 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0109
 U 1 1 5DF0D1D6
 P 4850 3250
-F 0 "#PWR?" H 4850 3000 50  0001 C CNN
+F 0 "#PWR0109" H 4850 3000 50  0001 C CNN
 F 1 "GND" H 4855 3077 50  0000 C CNN
 F 2 "" H 4850 3250 50  0001 C CNN
 F 3 "" H 4850 3250 50  0001 C CNN
@@ -713,10 +713,10 @@ Wire Wire Line
 Wire Wire Line
 	5350 3200 5350 3150
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR0114
 U 1 1 5DF13942
 P 4850 2750
-F 0 "#PWR?" H 4850 2600 50  0001 C CNN
+F 0 "#PWR0114" H 4850 2600 50  0001 C CNN
 F 1 "+5V" H 4865 2923 50  0000 C CNN
 F 2 "" H 4850 2750 50  0001 C CNN
 F 3 "" H 4850 2750 50  0001 C CNN
@@ -741,73 +741,13 @@ Wire Wire Line
 Wire Wire Line
 	3800 2800 3800 3650
 Connection ~ 4300 2800
-Wire Wire Line
-	3900 3950 3050 3950
-Wire Wire Line
-	3050 3950 3050 2900
-Wire Wire Line
-	3050 2900 2050 2900
-Wire Wire Line
-	2950 4050 2950 3300
-Wire Wire Line
-	2950 3300 2050 3300
-Wire Wire Line
-	2950 4050 3900 4050
-Wire Wire Line
-	2850 4150 2850 3700
-Wire Wire Line
-	2850 3700 2050 3700
-Wire Wire Line
-	2850 4150 3900 4150
-Wire Wire Line
-	2750 4250 2750 4100
-Wire Wire Line
-	2750 4100 2050 4100
-Wire Wire Line
-	2750 4250 3900 4250
-Wire Wire Line
-	2050 4500 2750 4500
-Wire Wire Line
-	2750 4500 2750 4350
-Wire Wire Line
-	2750 4350 3900 4350
-Wire Wire Line
-	3900 4450 2850 4450
-Wire Wire Line
-	2850 4450 2850 4900
-Wire Wire Line
-	2850 4900 2050 4900
-Wire Wire Line
-	2050 5300 2950 5300
-Wire Wire Line
-	2950 5300 2950 4550
-Wire Wire Line
-	2950 4550 3900 4550
-Wire Wire Line
-	2050 5700 3050 5700
-Wire Wire Line
-	3050 5700 3050 4750
-Wire Wire Line
-	3050 4750 3900 4750
-Wire Wire Line
-	3900 4850 3150 4850
-Wire Wire Line
-	3150 4850 3150 6100
-Wire Wire Line
-	3150 6100 2050 6100
-Wire Wire Line
-	2050 6500 3250 6500
-Wire Wire Line
-	3250 6500 3250 4950
-Wire Wire Line
-	3250 4950 3900 4950
 $Comp
 L Device:R R?
 U 1 1 5DE4BB6C
 P 7600 2350
 AR Path="/5DE1DFF6/5DE4BB6C" Ref="R?"  Part="1" 
-AR Path="/5DE2A82E/5DE4BB6C" Ref="R?"  Part="1" 
-F 0 "R?" V 7500 2250 50  0000 L CNN
+AR Path="/5DE2A82E/5DE4BB6C" Ref="R96"  Part="1" 
+F 0 "R96" V 7500 2250 50  0000 L CNN
 F 1 "180" V 7750 2250 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 7530 2350 50  0001 C CNN
 F 3 "~" H 7600 2350 50  0001 C CNN
@@ -816,17 +756,11 @@ F 3 "~" H 7600 2350 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	7750 2350 7900 2350
-Wire Wire Line
-	7450 2350 3450 2350
-Wire Wire Line
-	3450 2350 3450 3850
-Wire Wire Line
-	3450 3850 3900 3850
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0115
 U 1 1 5DE5620F
 P 1250 6650
-F 0 "#PWR?" H 1250 6400 50  0001 C CNN
+F 0 "#PWR0115" H 1250 6400 50  0001 C CNN
 F 1 "GND" H 1255 6477 50  0000 C CNN
 F 2 "" H 1250 6650 50  0001 C CNN
 F 3 "" H 1250 6650 50  0001 C CNN
@@ -882,4 +816,103 @@ Wire Wire Line
 Wire Wire Line
 	1250 2900 1400 2900
 Connection ~ 1250 3300
+Text Label 3600 5050 0    50   ~ 0
+Star
+Wire Wire Line
+	7450 2350 7200 2350
+Text Label 7200 2350 0    50   ~ 0
+Star
+Wire Wire Line
+	3900 4950 3600 4950
+Wire Wire Line
+	3600 5050 3900 5050
+Text Label 3600 4950 0    50   ~ 0
+Bulb_0
+Wire Wire Line
+	2050 2900 2300 2900
+Text Label 2050 2900 0    50   ~ 0
+Bulb_0
+Wire Wire Line
+	2050 3300 2300 3300
+Wire Wire Line
+	2050 3700 2300 3700
+Wire Wire Line
+	2050 4100 2300 4100
+Wire Wire Line
+	2050 4500 2300 4500
+Wire Wire Line
+	2050 4900 2300 4900
+Wire Wire Line
+	2050 5300 2300 5300
+Wire Wire Line
+	2050 5700 2300 5700
+Wire Wire Line
+	2050 6100 2300 6100
+Wire Wire Line
+	2050 6500 2300 6500
+Text Label 2050 3700 0    50   ~ 0
+Bulb_1
+Wire Wire Line
+	3900 4850 3600 4850
+Text Label 3600 4850 0    50   ~ 0
+Bulb_1
+Text Label 2050 4500 0    50   ~ 0
+Bulb_2
+Wire Wire Line
+	3900 4750 3600 4750
+Text Label 3600 4750 0    50   ~ 0
+Bulb_2
+Text Label 2050 5300 0    50   ~ 0
+Bulb_3
+Wire Wire Line
+	3900 4550 3600 4550
+Text Label 3600 4550 0    50   ~ 0
+Bulb_3
+Text Label 2050 6100 0    50   ~ 0
+Bulb_4
+Wire Wire Line
+	3900 4450 3600 4450
+Text Label 3600 4450 0    50   ~ 0
+Bulb_4
+Text Label 2050 3300 0    50   ~ 0
+Bulb_9
+Wire Wire Line
+	3900 5150 3600 5150
+Text Label 3600 5150 0    50   ~ 0
+Bulb_9
+Text Label 2050 4100 0    50   ~ 0
+Bulb_8
+Wire Wire Line
+	3900 5250 3600 5250
+Text Label 3600 5250 0    50   ~ 0
+Bulb_8
+Text Label 2050 4900 0    50   ~ 0
+Bulb_7
+Wire Wire Line
+	3900 5350 3600 5350
+Text Label 3600 5350 0    50   ~ 0
+Bulb_7
+Text Label 2050 5700 0    50   ~ 0
+Bulb_6
+Text Label 7950 4150 0    50   ~ 0
+Bulb_6
+Wire Wire Line
+	7900 4150 8200 4150
+Text Label 2050 6500 0    50   ~ 0
+Bulb_5
+Wire Wire Line
+	7900 4250 8200 4250
+Text Label 7950 4250 0    50   ~ 0
+Bulb_5
+NoConn ~ 7900 3750
+NoConn ~ 7900 3850
+NoConn ~ 7900 3950
+NoConn ~ 7900 4050
+NoConn ~ 3900 3850
+NoConn ~ 3900 3950
+NoConn ~ 3900 4050
+NoConn ~ 3900 4150
+NoConn ~ 3900 4250
+NoConn ~ 3900 4350
+NoConn ~ 3900 5450
 $EndSCHEMATC
