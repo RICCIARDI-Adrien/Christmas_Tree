@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -433,7 +434,7 @@ P 7600 2350
 AR Path="/5DE1DFF6/5DE4BB6C" Ref="R?"  Part="1" 
 AR Path="/5DE2A82E/5DE4BB6C" Ref="R96"  Part="1" 
 F 0 "R96" V 7500 2250 50  0000 L CNN
-F 1 "180" V 7750 2250 50  0000 L CNN
+F 1 "220" V 7750 2250 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 7530 2350 50  0001 C CNN
 F 3 "~" H 7600 2350 50  0001 C CNN
 	1    7600 2350

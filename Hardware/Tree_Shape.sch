@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -2861,10 +2862,10 @@ Wire Notes Line
 Wire Notes Line
 	850  650  10750 650 
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR0101
 U 1 1 6091B466
 P 3350 5850
-F 0 "#PWR?" H 3350 5700 50  0001 C CNN
+F 0 "#PWR0101" H 3350 5700 50  0001 C CNN
 F 1 "+5V" H 3365 6023 50  0000 C CNN
 F 2 "" H 3350 5850 50  0001 C CNN
 F 3 "" H 3350 5850 50  0001 C CNN
