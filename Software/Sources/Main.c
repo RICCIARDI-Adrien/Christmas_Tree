@@ -43,7 +43,8 @@
 /** Entry point for all high priority interrupts. */
 static void __interrupt high_priority MainInterruptHandlerHighPriority(void)
 {
-	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_FIRED()) FadingLedInterruptHighPriority();
+	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_1_FIRED()) FadingLedInterruptHandlerHighPriority1();
+	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_2_FIRED()) FadingLedInterruptHandlerHighPriority2();
 }
 
 //-------------------------------------------------------------------------------------------------
