@@ -31,11 +31,38 @@
 // CONFIG7H register
 #pragma config EBTRB = OFF // Disable boot block table read protection
 
+/** Oscillator frequency in Hz (needed by software delay routines). */
+#define _XTAL_FREQ 64000000
+
 //-------------------------------------------------------------------------------------------------
 // Private constants
 //-------------------------------------------------------------------------------------------------
-/** Oscillator frequency in Hz (needed by software delay routines). */
-#define _XTAL_FREQ 64000000
+/** Minimum brightness value (in PWM duty cycle period unit). */
+#define MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD 1000
+
+//-------------------------------------------------------------------------------------------------
+// Private types
+//-------------------------------------------------------------------------------------------------
+/** A led can be in different states. Here are all allowed states. */
+typedef enum
+{
+	MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS, //!< Brightness is increasing up to maximum value.
+	MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS, //!< Brightness is decreasing up to minimum value.
+	MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE //!< Due to human eye logarithmic functioning, led minimum brightness value seems to last less than maximum brightness one, so add some delay when minimum brightness is reached
+} TMainShiningLedState;
+
+/** Allow to shine each led separately. */
+typedef struct
+{
+	unsigned short PWM_Duty_Cycle_Period; //!< The led current duty cycle.
+	TMainShiningLedState State; //!< The led current state.
+} TMainShiningLed;
+
+//-------------------------------------------------------------------------------------------------
+// Private variables
+//-------------------------------------------------------------------------------------------------
+/** All the leds that will shine. */
+static TMainShiningLed Main_Shining_Leds[FADING_LED_IDS_COUNT]; // This static variable will be initialized to zero at boot, so default state will be MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
 
 //-------------------------------------------------------------------------------------------------
 // Private functions
@@ -52,7 +79,8 @@ static void __interrupt high_priority MainInterruptHandlerHighPriority(void)
 //-------------------------------------------------------------------------------------------------
 void main(void)
 {
-	unsigned short i;
+	unsigned char i;
+	TMainShiningLed *Pointer_Shining_Led;
 	
 	// Set oscillator frequency to 64MHz
 	OSCCON = 0x78; // Core enters sleep mode when issuing a SLEEP instruction, select 16MHz frequency for high frequency internal oscillator, device is running from primary clock (set as "internal oscillator" in configuration registers)
@@ -68,19 +96,55 @@ void main(void)
 	INTCONbits.GIE = 1; // Enable high priority interrupts
 	INTCONbits.PEIE = 1; // Enable low priority interrupts
 	
-	// TEST
+	// Make bulbs and star shine
 	while (1)
 	{
-		for (i = 1; i < 65535; i++)
+		// Handle all leds
+		for (i = 0; i < FADING_LED_IDS_COUNT; i++)
 		{
-			FadingLedSetDutyCycle(0, (unsigned short) i);
-			__delay_us(30);
+			// Cache led access
+			Pointer_Shining_Led = &Main_Shining_Leds[i];
+			
+			// Handle current led state
+			switch (Pointer_Shining_Led->State)
+			{
+				case MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS:
+					// Maximum brightness has not been reached, continue increasing it
+					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 0xFFFF) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
+					// Maximum brightness has been reached, go to next step
+					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS; // A state machine cycle is lost by doing this way but this does not matter here
+					
+					// Update led
+					FadingLedSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
+					break;
+					
+				case MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS:
+					// Minimum brightness has not been reached, continue decreasing it
+					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period > MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD) Pointer_Shining_Led->PWM_Duty_Cycle_Period--;
+					// Minimum brightness has been reached, got to next step
+					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE;
+						
+					// Update led
+					FadingLedSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
+					break;
+					
+				case MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE:
+					// Recycle duty cycle period to use as counter (when entering this state the first time, right after MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS, duty cycle period is always 0)
+					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 12000) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
+					// Enough time has been spent, increase brightness
+					else
+					{
+						Pointer_Shining_Led->PWM_Duty_Cycle_Period = MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD; // Reset duty cycle to restart a brightness increase cycle
+						Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS;
+					}
+					break;
+					
+				default:
+					break;
+			}
 		}
 		
-		for (i = 65535; i > 0; i--)
-		{
-			FadingLedSetDutyCycle(0, (unsigned short) i);
-			__delay_us(30);
-		}
+		// State machine tick
+		__delay_us(50);
 	}
 }
