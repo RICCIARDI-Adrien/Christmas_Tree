@@ -22,6 +22,16 @@
 typedef enum
 {
 	FADING_LED_ID_BULB_0,
+	FADING_LED_ID_BULB_1,
+	FADING_LED_ID_BULB_2,
+	FADING_LED_ID_BULB_3,
+	FADING_LED_ID_BULB_4,
+	FADING_LED_ID_BULB_5,
+	FADING_LED_ID_BULB_6,
+	FADING_LED_ID_BULB_7,
+	FADING_LED_ID_BULB_8,
+	FADING_LED_ID_BULB_9,
+	FADING_LED_ID_STAR,
 	FADING_LED_IDS_COUNT
 } TFadingLedID;
 
@@ -31,8 +41,11 @@ typedef enum
 /** Configure all software PWM channels. */
 void FadingLedInitialize(void);
 
-/** TODO */
-void FadingLedSetDutyCycle(TFadingLedID Led_ID, unsigned short Period);
+/** Set a specific led duty cycle period.
+ * @param Led_ID The led to configure.
+ * @param Duty_Cycle_Period How many time the led remains lighted. 0 : turned off, 0xFFFF : always on.
+ */
+void FadingLedSetDutyCycle(TFadingLedID Led_ID, unsigned short Duty_Cycle_Period);
 
 /** Must be called each time high priority 1 interrupt fires. */
 void FadingLedInterruptHandlerHighPriority1(void);

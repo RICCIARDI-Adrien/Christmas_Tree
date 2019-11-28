@@ -32,6 +32,96 @@ static TFadingLed Fading_Leds[FADING_LED_IDS_COUNT] =
 		0,
 		0,
 		0
+	},
+	// Bulb 1
+	{
+		&LATC,
+		1,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 2
+	{
+		&LATC,
+		0,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 3
+	{
+		&LATA,
+		6,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 4
+	{
+		&LATA,
+		7,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 5
+	{
+		&LATB,
+		5,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 6
+	{
+		&LATB,
+		4,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 7
+	{
+		&LATC,
+		6,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 8
+	{
+		&LATC,
+		5,
+		0,
+		0,
+		0,
+		0
+	},
+	// Bulb 9
+	{
+		&LATC,
+		4,
+		0,
+		0,
+		0,
+		0
+	},
+	// Star
+	{
+		&LATC,
+		3,
+		0,
+		0,
+		0,
+		0
 	}
 };
 
@@ -104,10 +194,19 @@ static void FadingLedConfigureNextDutyCyclePeriodEnd(void)
 //-------------------------------------------------------------------------------------------------
 void FadingLedInitialize(void)
 {
-	// Initialize all channels pins as output TODO
-	// TEST
-	ANSELCbits.ANSC2 = 0;
-	TRISCbits.TRISC2 = 0;
+	// Configure all channels pins
+	// Make sure all leds are turned off on boot
+	LATA = 0;
+	LATB = 0;
+	LATC = 0;
+	// Set all ports pins as digital
+	ANSELA = 0;
+	ANSELB = 0;
+	ANSELC = 0;
+	// Set all ports pins as output
+	TRISA = 0;
+	TRISB = 0;
+	TRISC = 0;
 	
 	// Use timer 1 to generate a PWM base frequency of about 244Hz
 	TMR1H = 0;
@@ -129,12 +228,12 @@ void FadingLedInitialize(void)
 	T1CONbits.TMR1ON = 1;
 }
 
-void FadingLedSetDutyCycle(TFadingLedID Led_ID, unsigned short Period)
+void FadingLedSetDutyCycle(TFadingLedID Led_ID, unsigned short Duty_Cycle_Period)
 {
 	// Turn timer 1 interrupt off to atomically change the requested period (as this function is called from less priority context)
 	PIE1bits.TMR1IE = 0;
 	
-	Fading_Leds[Led_ID].Requested_PWM_Duty_Cycle_Period = Period;
+	Fading_Leds[Led_ID].Requested_PWM_Duty_Cycle_Period = Duty_Cycle_Period;
 	
 	// Re-enable timer 1 interrupt
 	PIE1bits.TMR1IE = 1;
