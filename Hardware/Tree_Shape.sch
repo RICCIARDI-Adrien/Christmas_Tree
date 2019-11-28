@@ -1,14 +1,13 @@
 EESchema Schematic File Version 4
-LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
-Title ""
+Title "Tree and trunk shapes"
 Date ""
 Rev ""
-Comp ""
+Comp "Adrien RICCIARDI"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -1503,8 +1502,6 @@ F 3 "~" H 1500 1650 50  0001 C CNN
 $EndComp
 Text Notes 9650 5250 0    50   ~ 0
 Tree foliage.\nAll leds are green.
-Text Notes 7350 7500 0    50   ~ 0
-Tree and trunk shapes
 $Comp
 L Device:LED D73
 U 1 1 5DE622C8

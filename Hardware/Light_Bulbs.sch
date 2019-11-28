@@ -1,21 +1,18 @@
 EESchema Schematic File Version 4
-LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 3
-Title ""
+Title "Light bulbs"
 Date ""
 Rev ""
-Comp ""
+Comp "Adrien RICCIARDI"
 Comment1 ""
 Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Notes 7400 7500 0    50   ~ 0
-Light bulbs
 Wire Wire Line
 	1750 2900 1700 2900
 Wire Wire Line

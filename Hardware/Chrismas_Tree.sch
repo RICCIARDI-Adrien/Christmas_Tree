@@ -1,14 +1,13 @@
 EESchema Schematic File Version 4
-LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
-Title ""
+Title "Chrismas tree hierarchical view"
 Date ""
 Rev ""
-Comp ""
+Comp "Adrien RICCIARDI"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -20,8 +19,6 @@ U 5DE1DFF6
 F0 "Tree shape" 50
 F1 "Tree_Shape.sch" 50
 $EndSheet
-Text Notes 7400 7500 0    50   ~ 0
-Chrismas tree hierarchical view
 $Sheet
 S 4600 3350 1250 1100
 U 5DE2A82E
