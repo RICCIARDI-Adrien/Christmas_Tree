@@ -65,7 +65,7 @@ static inline unsigned char FadingLedGetPinValue(TFadingLedID Led_ID)
 	return 0;
 }
 
-/** TODO */
+/** Configure timer 3 to trigger an interrupt when the next PWM channel duty cycle period is elapsed. */
 static void FadingLedConfigureNextDutyCyclePeriodEnd(void)
 {
 	unsigned char i;
@@ -127,6 +127,17 @@ void FadingLedInitialize(void)
 	
 	// Enable timer 1 only, timer 3 will be automatically enabled by timer 1 interrupt handler
 	T1CONbits.TMR1ON = 1;
+}
+
+void FadingLedSetDutyCycle(TFadingLedID Led_ID, unsigned short Period)
+{
+	// Turn timer 1 interrupt off to atomically change the requested period (as this function is called from less priority context)
+	PIE1bits.TMR1IE = 0;
+	
+	Fading_Leds[Led_ID].Requested_PWM_Duty_Cycle_Period = Period;
+	
+	// Re-enable timer 1 interrupt
+	PIE1bits.TMR1IE = 1;
 }
 
 void FadingLedInterruptHandlerHighPriority1(void)

@@ -52,6 +52,8 @@ static void __interrupt high_priority MainInterruptHandlerHighPriority(void)
 //-------------------------------------------------------------------------------------------------
 void main(void)
 {
+	unsigned short i;
+	
 	// Set oscillator frequency to 64MHz
 	OSCCON = 0x78; // Core enters sleep mode when issuing a SLEEP instruction, select 16MHz frequency for high frequency internal oscillator, device is running from primary clock (set as "internal oscillator" in configuration registers)
 	while (!OSCCONbits.HFIOFS); // Wait for the internal oscillator to stabilize
@@ -67,5 +69,18 @@ void main(void)
 	INTCONbits.PEIE = 1; // Enable low priority interrupts
 	
 	// TEST
-	while (1);
+	while (1)
+	{
+		for (i = 1; i < 65535; i++)
+		{
+			FadingLedSetDutyCycle(0, (unsigned short) i);
+			__delay_us(30);
+		}
+		
+		for (i = 65535; i > 0; i--)
+		{
+			FadingLedSetDutyCycle(0, (unsigned short) i);
+			__delay_us(30);
+		}
+	}
 }
