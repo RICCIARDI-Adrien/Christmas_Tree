@@ -2,6 +2,7 @@
  * Handle light bulbs fading cycles.
  * @author Adrien RICCIARDI
  */
+#include <Fading_Led.h>
 #include <xc.h>
 
 //-------------------------------------------------------------------------------------------------
@@ -48,11 +49,5 @@ void main(void)
 	OSCTUNEbits.PLLEN = 1; // Enable 4x PLL
 	
 	// TEST
-	ANSELCbits.ANSC2 = 0;
-	TRISCbits.TRISC2 = 0;
-	while (1)
-	{
-		LATCbits.LATC2 = !LATCbits.LATC2;
-		__delay_ms(100);
-	}
+	FadingLedInitialize();
 }
