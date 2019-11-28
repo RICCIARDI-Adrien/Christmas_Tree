@@ -38,6 +38,15 @@
 #define _XTAL_FREQ 64000000
 
 //-------------------------------------------------------------------------------------------------
+// Private functions
+//-------------------------------------------------------------------------------------------------
+/** Entry point for all high priority interrupts. */
+static void __interrupt high_priority MainInterruptHandlerHighPriority(void)
+{
+	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_FIRED()) FadingLedInterruptHighPriority();
+}
+
+//-------------------------------------------------------------------------------------------------
 // Entry point
 //-------------------------------------------------------------------------------------------------
 void main(void)
@@ -48,6 +57,14 @@ void main(void)
 	OSCCON2 = 0x04; // Turn off secondary oscillator, enable primary oscillator drive circuit
 	OSCTUNEbits.PLLEN = 1; // Enable 4x PLL
 	
-	// TEST
+	// Initialize all modules
 	FadingLedInitialize();
+	
+	// Enable interrupts
+	RCONbits.IPEN = 1; // Enable interrupt priorities
+	INTCONbits.GIE = 1; // Enable high priority interrupts
+	INTCONbits.PEIE = 1; // Enable low priority interrupts
+	
+	// TEST
+	while (1);
 }
