@@ -36,7 +36,7 @@
 // Private constants
 //-------------------------------------------------------------------------------------------------
 /** Minimum brightness value (in PWM duty cycle period unit). */
-#define MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD 1000
+#define MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD 0
 
 //-------------------------------------------------------------------------------------------------
 // Private types
@@ -60,7 +60,7 @@ typedef struct
 // Private variables
 //-------------------------------------------------------------------------------------------------
 /** All the leds that will shine. */
-static TMainShiningLed Main_Shining_Leds[FADING_LED_IDS_COUNT]; // This static variable will be initialized to zero at boot, so default state will be MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT]; // This static variable will be initialized to zero at boot, so default state will be MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
 
 //-------------------------------------------------------------------------------------------------
 // Private functions
@@ -87,23 +87,16 @@ void main(void)
 	FadingLedInitialize();
 	PWMInitialize();
 	
-	// TEST
-	PWMSetDutyCycle(0, 128);
-	PWMSetDutyCycle(1, 1);
-	PWMSetDutyCycle(2, 1022);
-	PWMSetDutyCycle(3, 900);
-	while (1);
-	
 	// Enable interrupts
-	RCONbits.IPEN = 1; // Enable interrupt priorities
-	INTCONbits.GIE = 1; // Enable high priority interrupts
-	INTCONbits.PEIE = 1; // Enable low priority interrupts
+	//RCONbits.IPEN = 1; // Enable interrupt priorities
+	//INTCONbits.GIE = 1; // Enable high priority interrupts
+	//INTCONbits.PEIE = 1; // Enable low priority interrupts
 	
 	// Make bulbs and star shine
 	while (1)
 	{
 		// Handle all leds
-		for (i = 0; i < FADING_LED_IDS_COUNT; i++)
+		for (i = 0; i < PWM_CHANNEL_IDS_COUNT; i++)
 		{
 			// Cache led access
 			Pointer_Shining_Led = &Main_Shining_Leds[i];
@@ -113,12 +106,12 @@ void main(void)
 			{
 				case MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS:
 					// Maximum brightness has not been reached, continue increasing it
-					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 0xFFFF) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
+					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < PWM_MAXIMUM_DUTY_CYCLE_VALUE) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
 					// Maximum brightness has been reached, go to next step
 					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS; // A state machine cycle is lost by doing this way but this does not matter here
 					
 					// Update led
-					FadingLedSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
+					PWMSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
 					break;
 					
 				case MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS:
@@ -128,12 +121,12 @@ void main(void)
 					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE;
 						
 					// Update led
-					FadingLedSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
+					PWMSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
 					break;
 					
 				case MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE:
 					// Recycle duty cycle period to use as counter (when entering this state the first time, right after MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS, duty cycle period is always 0)
-					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 12000) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
+					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 200) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
 					// Enough time has been spent, increase brightness
 					else
 					{
@@ -148,6 +141,6 @@ void main(void)
 		}
 		
 		// State machine tick
-		__delay_us(50);
+		__delay_ms(3);
 	}
 }
