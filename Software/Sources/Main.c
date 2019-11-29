@@ -59,7 +59,29 @@ typedef struct
 // Private variables
 //-------------------------------------------------------------------------------------------------
 /** All the leds that will shine. */
-static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT]; // This static variable will be initialized to zero at boot, so default state will be MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT] =
+{
+	// PWM_CHANNEL_ID_STAR
+	{
+		0,
+		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+	},
+	// PWM_CHANNEL_ID_RED_FAIRY_LIGHTS
+	{
+		256,
+		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+	},
+	// PWM_CHANNEL_ID_BLUE_FAIRY_LIGHTS
+	{
+		512,
+		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+	},
+	// PWM_CHANNEL_ID_YELLOW_FAIRY_LIGHTS
+	{
+		768,
+		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+	}
+};
 
 //-------------------------------------------------------------------------------------------------
 // Entry point
