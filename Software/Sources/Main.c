@@ -3,19 +3,20 @@
  * @author Adrien RICCIARDI
  */
 #include <Fading_Led.h>
+#include <PWM.h>
 #include <xc.h>
 
 //-------------------------------------------------------------------------------------------------
 // Microcontroller configuration
 //-------------------------------------------------------------------------------------------------
 // CONFIG1H register
-#pragma config FOSC = INTIO67, PLLCFG = ON, PRICLKEN = ON, FCMEN = OFF, IESO = OFF // Use internal oscillator, multiply oscillator frequency by 4 by enabling the PLL, enable primary clock, disable fail-safe clock monitor, disable oscillator switchover mode
+#pragma config FOSC = INTIO67, PLLCFG = OFF, PRICLKEN = ON, FCMEN = OFF, IESO = OFF // Use internal oscillator, do not enable PLL, enable primary clock, disable fail-safe clock monitor, disable oscillator switchover mode
 // CONFIG2L register
 #pragma config PWRTEN = ON, BOREN = SBORDIS, BORV = 285 // Enable power up timer, enable brown-out reset in hardware only (so it can't be disabled by software), set highest value for brown-out voltage (2.85V)
 // CONFIG2H register
 #pragma config WDTEN = OFF // Disable watchdog timer
 // CONFIG3H register
-#pragma config PBADEN = OFF, HFOFST = OFF, MCLRE = EXTMCLR // Port B pin 5..0 are configured as digital I/O on reset, wait for the oscillator to become stable before starting executing code, enable MCLR pin
+#pragma config CCP2MX = PORTC1, PBADEN = OFF, CCP3MX = PORTB5, HFOFST = OFF, MCLRE = EXTMCLR // Connect CCP2 module to RC1 pin, port B pin 5..0 are configured as digital I/O on reset, connect CCP3 module to RB5 pin, wait for the oscillator to become stable before starting executing code, enable MCLR pin
 // CONFIG4L register
 #pragma config STVREN = ON, LVP = OFF, XINST = OFF, DEBUG = OFF // Reset on stack underflow or overflow, disable single supply ICSP, disable extended instruction set, disable background debug
 // CONFIG5L register
@@ -30,9 +31,6 @@
 #pragma config EBTR0 = OFF, EBTR1 = OFF // Disable all table read protections
 // CONFIG7H register
 #pragma config EBTRB = OFF // Disable boot block table read protection
-
-/** Oscillator frequency in Hz (needed by software delay routines). */
-#define _XTAL_FREQ 64000000
 
 //-------------------------------------------------------------------------------------------------
 // Private constants
@@ -82,14 +80,15 @@ void main(void)
 	unsigned char i;
 	TMainShiningLed *Pointer_Shining_Led;
 	
-	// Set oscillator frequency to 64MHz
-	OSCCON = 0x78; // Core enters sleep mode when issuing a SLEEP instruction, select 16MHz frequency for high frequency internal oscillator, device is running from primary clock (set as "internal oscillator" in configuration registers)
-	while (!OSCCONbits.HFIOFS); // Wait for the internal oscillator to stabilize
-	OSCCON2 = 0x04; // Turn off secondary oscillator, enable primary oscillator drive circuit
-	OSCTUNEbits.PLLEN = 1; // Enable 4x PLL
+	// Set oscillator frequency to 4MHz
+	OSCCON = 0x52; // Set a 4MHz internal oscillator frequency, select internal oscillator block
 	
 	// Initialize all modules
 	FadingLedInitialize();
+	PWMInitialize();
+	
+	// TEST
+	while (1);
 	
 	// Enable interrupts
 	RCONbits.IPEN = 1; // Enable interrupt priorities
