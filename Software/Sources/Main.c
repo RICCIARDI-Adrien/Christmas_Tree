@@ -2,7 +2,6 @@
  * Handle light bulbs fading cycles.
  * @author Adrien RICCIARDI
  */
-#include <Fading_Led.h>
 #include <PWM.h>
 #include <xc.h>
 
@@ -63,16 +62,6 @@ typedef struct
 static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT]; // This static variable will be initialized to zero at boot, so default state will be MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
 
 //-------------------------------------------------------------------------------------------------
-// Private functions
-//-------------------------------------------------------------------------------------------------
-/** Entry point for all high priority interrupts. */
-static void __interrupt high_priority MainInterruptHandlerHighPriority(void)
-{
-	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_1_FIRED()) FadingLedInterruptHandlerHighPriority1();
-	if (FADING_LED_HAS_HIGH_PRIORITY_INTERRUPT_2_FIRED()) FadingLedInterruptHandlerHighPriority2();
-}
-
-//-------------------------------------------------------------------------------------------------
 // Entry point
 //-------------------------------------------------------------------------------------------------
 void main(void)
@@ -84,15 +73,9 @@ void main(void)
 	OSCCON = 0x52; // Set a 4MHz internal oscillator frequency, select internal oscillator block
 	
 	// Initialize all modules
-	FadingLedInitialize();
 	PWMInitialize();
-	
-	// Enable interrupts
-	//RCONbits.IPEN = 1; // Enable interrupt priorities
-	//INTCONbits.GIE = 1; // Enable high priority interrupts
-	//INTCONbits.PEIE = 1; // Enable low priority interrupts
-	
-	// Make bulbs and star shine
+
+	// Make fairy lights and star shine
 	while (1)
 	{
 		// Handle all leds
