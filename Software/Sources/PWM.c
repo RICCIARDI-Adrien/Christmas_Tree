@@ -6,6 +6,44 @@
 #include <xc.h>
 
 //-------------------------------------------------------------------------------------------------
+// Private types
+//-------------------------------------------------------------------------------------------------
+/** Access table to reach a PWM channel registers as fast as possible. */
+typedef struct
+{
+	volatile unsigned char *Pointer_Duty_Cycle_High_Register; //!< Store duty cycle period bits 9..2.
+	volatile unsigned char *Pointer_Duty_Cycle_Low_Register; //!< Store duty cycle period bits 2..0 in register bits 5..4.
+} TPWMChannel;
+
+//-------------------------------------------------------------------------------------------------
+// Private variables
+//-------------------------------------------------------------------------------------------------
+/** All PWM channels. */
+static TPWMChannel PWM_Channels[PWM_CHANNEL_IDS_COUNT] =
+{
+	// PWM_CHANNEL_ID_STAR
+	{
+		&CCPR1L,
+		&CCP1CON
+	},
+	// PWM_CHANNEL_ID_RED_FAIRY_LIGHTS
+	{
+		&CCPR2L,
+		&CCP2CON
+	},
+	// PWM_CHANNEL_ID_BLUE_FAIRY_LIGHTS
+	{
+		&CCPR3L,
+		&CCP3CON
+	},
+	// PWM_CHANNEL_ID_YELLOW_FAIRY_LIGHTS
+	{
+		&CCPR5L,
+		&CCP5CON
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
 // Public functions
 //-------------------------------------------------------------------------------------------------
 void PWMInitialize(void)
@@ -43,10 +81,19 @@ void PWMInitialize(void)
 	TRISA = 0;
 	TRISB = 0;
 	TRISC = 0;
+}
+
+void PWMSetDutyCycle(TPWMChannelID Channel_ID, unsigned short Duty_Cycle_Period)
+{
+	TPWMChannel *Pointer_Channel;
 	
-	// TEST
-	CCPR1L = 512 >> 2; // 50%
-	CCPR2L = 256 >> 2; // 25%
-	CCPR3L = 768 >> 2; // 75%
-	CCPR5L = 341 >> 2; // 33%
+	// Cache channel access
+	Pointer_Channel = &PWM_Channels[Channel_ID];
+	
+	// Set least significant bits
+	*(Pointer_Channel->Pointer_Duty_Cycle_Low_Register) &= 0xCF; // Clear bits 5..4
+	*(Pointer_Channel->Pointer_Duty_Cycle_Low_Register) |= (Duty_Cycle_Period << 4) & 0x30;
+	
+	// Set most significant bits
+	*(Pointer_Channel->Pointer_Duty_Cycle_High_Register) = Duty_Cycle_Period >> 2;
 }

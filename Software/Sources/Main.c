@@ -88,6 +88,10 @@ void main(void)
 	PWMInitialize();
 	
 	// TEST
+	PWMSetDutyCycle(0, 128);
+	PWMSetDutyCycle(1, 1);
+	PWMSetDutyCycle(2, 1022);
+	PWMSetDutyCycle(3, 900);
 	while (1);
 	
 	// Enable interrupts
