@@ -73,6 +73,10 @@ void PWMInitialize(void)
 	T2CON = 0x06; // Select no postscaler as it is not used in PWM mode, select 1:16 prescaler, enable timer
 	
 	// Configure all channels pins now that PWM are operational
+	// Turn all leds off on boot
+	LATA = 0;
+	LATB = 0;
+	LATC = 0;
 	// Set all ports pins as digital
 	ANSELA = 0;
 	ANSELB = 0;
