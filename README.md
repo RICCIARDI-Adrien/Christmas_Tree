@@ -1,6 +1,8 @@
 # Christmas tree
 
-A lighted christmas tree with shiny light bulbs.
+A lighted Christmas tree with shiny fairy lights and star.  
+
+Board is powered by an USB-B connector. Use a 2A (or more) standard USB power supply, like [this one](https://fr.rs-online.com/web/p/adaptateurs-ac-dc/1242193/).
 
 ## Building
 
