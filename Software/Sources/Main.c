@@ -34,25 +34,17 @@
 //-------------------------------------------------------------------------------------------------
 // Private constants
 //-------------------------------------------------------------------------------------------------
-/** Minimum brightness value (in PWM duty cycle period unit). */
-#define MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD 0
+/** How many steps in the dimming curve. */
+#define MAIN_DIMMING_VALUES_COUNT 64
 
 //-------------------------------------------------------------------------------------------------
 // Private types
 //-------------------------------------------------------------------------------------------------
-/** A led can be in different states. Here are all allowed states. */
-typedef enum
-{
-	MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS, //!< Brightness is increasing up to maximum value.
-	MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS, //!< Brightness is decreasing up to minimum value.
-	MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE //!< Due to human eye logarithmic functioning, led minimum brightness value seems to last less than maximum brightness one, so add some delay when minimum brightness is reached
-} TMainShiningLedState;
-
 /** Allow to shine each led separately. */
 typedef struct
 {
-	unsigned short PWM_Duty_Cycle_Period; //!< The led current duty cycle.
-	TMainShiningLedState State; //!< The led current state.
+	unsigned char Dimming_Value_Index; //!< How bright the led must be lighted.
+	unsigned char Is_Index_Incrementing; //!< Tell whether led brightness must increase or decrease.
 } TMainShiningLed;
 
 //-------------------------------------------------------------------------------------------------
@@ -64,23 +56,39 @@ static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT] =
 	// PWM_CHANNEL_ID_STAR
 	{
 		0,
-		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+		1
 	},
 	// PWM_CHANNEL_ID_RED_FAIRY_LIGHTS
 	{
-		256,
-		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+		16,
+		1
 	},
 	// PWM_CHANNEL_ID_BLUE_FAIRY_LIGHTS
 	{
-		512,
-		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+		32,
+		1
 	},
 	// PWM_CHANNEL_ID_YELLOW_FAIRY_LIGHTS
 	{
-		768,
-		MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS
+		48,
+		1
 	}
+};
+
+/** Exponential look-up table, computed to make the brightness variations linear to an human eye.
+ * The following LibreOffice Calc formula was used to compute this table : =ROUND(((A28/63)^EXP(1))*1023)
+ * Column A contains the look-up table index (here, A28=0, A29=1, A30=2...). Value 63 is the last array index, value 1023 is the maximum PWM value.
+ */
+static unsigned short Main_Dimming_Values[] =
+{
+	   0,    0,    0,    0,    1,    1,    2,    3,
+	   4,    5,    7,    9,   11,   14,   17,   21,
+	  25,   29,   34,   39,   45,   52,   59,   66,
+	  74,   83,   92,  102,  113,  124,  136,  149,
+	 162,  176,  191,  207,  223,  241,  259,  278,
+	 298,  318,  340,  362,  386,  410,  435,  461,
+	 488,  517,  546,  576,  607,  639,  673,  707,
+	 743,  779,  817,  856,  896,  937,  979, 1023
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -106,46 +114,27 @@ void main(void)
 			// Cache led access
 			Pointer_Shining_Led = &Main_Shining_Leds[i];
 			
-			// Handle current led state
-			switch (Pointer_Shining_Led->State)
+			// Set current led brightness
+			PWMSetDutyCycle(i, Main_Dimming_Values[Pointer_Shining_Led->Dimming_Value_Index]);
+			
+			// Update value index
+			if (Pointer_Shining_Led->Is_Index_Incrementing)
 			{
-				case MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS:
-					// Maximum brightness has not been reached, continue increasing it
-					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < PWM_MAXIMUM_DUTY_CYCLE_VALUE) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
-					// Maximum brightness has been reached, go to next step
-					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS; // A state machine cycle is lost by doing this way but this does not matter here
-					
-					// Update led
-					PWMSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
-					break;
-					
-				case MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS:
-					// Minimum brightness has not been reached, continue decreasing it
-					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period > MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD) Pointer_Shining_Led->PWM_Duty_Cycle_Period--;
-					// Minimum brightness has been reached, got to next step
-					else Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE;
-						
-					// Update led
-					PWMSetDutyCycle(i, Pointer_Shining_Led->PWM_Duty_Cycle_Period);
-					break;
-					
-				case MAIN_SHINING_LED_STATE_TURNED_OFF_PAUSE:
-					// Recycle duty cycle period to use as counter (when entering this state the first time, right after MAIN_SHINING_LED_STATE_DECREASE_BRIGHTNESS, duty cycle period is always 0)
-					if (Pointer_Shining_Led->PWM_Duty_Cycle_Period < 200) Pointer_Shining_Led->PWM_Duty_Cycle_Period++;
-					// Enough time has been spent, increase brightness
-					else
-					{
-						Pointer_Shining_Led->PWM_Duty_Cycle_Period = MAIN_MINIMUM_BRIGHTNESS_PWM_DUTY_CYCLE_PERIOD; // Reset duty cycle to restart a brightness increase cycle
-						Pointer_Shining_Led->State = MAIN_SHINING_LED_STATE_INCREASE_BRIGHTNESS;
-					}
-					break;
-					
-				default:
-					break;
+				// Keep incrementing
+				Pointer_Shining_Led->Dimming_Value_Index++;
+				// Prepare for decrementing next time if last dimming value has been reached
+				if (Pointer_Shining_Led->Dimming_Value_Index >= 63) Pointer_Shining_Led->Is_Index_Incrementing = 0;
+			}
+			else
+			{
+				// Keep decrementing
+				Pointer_Shining_Led->Dimming_Value_Index--;
+				// Prepare for incrementing next time if first dimming value has been reached
+				if (Pointer_Shining_Led->Dimming_Value_Index == 0) Pointer_Shining_Led->Is_Index_Incrementing = 1;
 			}
 		}
 		
-		// State machine tick
-		__delay_ms(3);
+		// Keep led brightness a little
+		__delay_ms(80);
 	}
 }
