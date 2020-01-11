@@ -35,7 +35,7 @@
 // Private constants
 //-------------------------------------------------------------------------------------------------
 /** How many steps in the dimming curve. */
-#define MAIN_DIMMING_VALUES_COUNT 64
+#define MAIN_DIMMING_VALUES_COUNT (sizeof(Main_Dimming_Values) / sizeof(Main_Dimming_Values[0]))
 
 //-------------------------------------------------------------------------------------------------
 // Private types
@@ -75,20 +75,21 @@ static TMainShiningLed Main_Shining_Leds[PWM_CHANNEL_IDS_COUNT] =
 	}
 };
 
-/** Exponential look-up table, computed to make the brightness variations linear to an human eye.
- * The following LibreOffice Calc formula was used to compute this table : =ROUND(((A28/63)^EXP(1))*1023)
- * Column A contains the look-up table index (here, A28=0, A29=1, A30=2...). Value 63 is the last array index, value 1023 is the maximum PWM value.
+/** Exponential lookup table, computed to make the brightness variations linear to an human eye.
+ * See Leds_Dimming_Lookup_Table.ods document in repository Resources directory for details about its computation.
  */
 static unsigned short Main_Dimming_Values[] =
 {
-	   0,    0,    0,    0,    1,    1,    2,    3,
-	   4,    5,    7,    9,   11,   14,   17,   21,
-	  25,   29,   34,   39,   45,   52,   59,   66,
-	  74,   83,   92,  102,  113,  124,  136,  149,
-	 162,  176,  191,  207,  223,  241,  259,  278,
-	 298,  318,  340,  362,  386,  410,  435,  461,
-	 488,  517,  546,  576,  607,  639,  673,  707,
-	 743,  779,  817,  856,  896,  937,  979, 1023
+	   0,    0,    1,    2,    3,    4,    5,    7,    8,   10,
+	  12,   15,   17,   20,   23,   26,   30,   33,   37,   41,
+	  45,   50,   54,   59,   64,   69,   75,   80,   86,   92,
+	  98,  105,  111,  118,  125,  133,  140,  148,  156,  164,
+	 172,  180,  189,  198,  207,  216,  226,  236,  246,  256,
+	 266,  277,  287,  298,  309,  321,  332,  344,  356,  368,
+	 381,  393,  406,  419,  432,  446,  459,  473,  487,  501,
+	 516,  530,  545,  560,  575,  591,  607,  622,  638,  655,
+	 671,  688,  705,  722,  739,  757,  774,  792,  810,  829,
+	 847,  866,  885,  904,  923,  943,  963,  982, 1003, 1023
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -123,7 +124,7 @@ void main(void)
 				// Keep incrementing
 				Pointer_Shining_Led->Dimming_Value_Index++;
 				// Prepare for decrementing next time if last dimming value has been reached
-				if (Pointer_Shining_Led->Dimming_Value_Index >= 63) Pointer_Shining_Led->Is_Index_Incrementing = 0;
+				if (Pointer_Shining_Led->Dimming_Value_Index >= MAIN_DIMMING_VALUES_COUNT - 1) Pointer_Shining_Led->Is_Index_Incrementing = 0;
 			}
 			else
 			{
