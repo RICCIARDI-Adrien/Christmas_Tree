@@ -5,6 +5,9 @@ A lighted Christmas tree with shiny fairy lights and star.
 ![Christmas tree picture 1](https://github.com/RICCIARDI-Adrien/Christmas_Tree/blob/master/Resources/Picture_1.jpg)
 ![Christmas tree picture 2](https://github.com/RICCIARDI-Adrien/Christmas_Tree/blob/master/Resources/Picture_2.jpg)
 
+Here are all needed parts to build the Christmas tree :  
+![Christmas tree picture 3](https://github.com/RICCIARDI-Adrien/Christmas_Tree/blob/master/Resources/Picture_3.jpg)
+
 ## Hardware
 
 Board has been designed with KiCaD 5.1.4.
