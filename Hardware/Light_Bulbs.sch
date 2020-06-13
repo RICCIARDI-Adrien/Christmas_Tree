@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -968,7 +967,7 @@ AR Path="/5DE1DFF6/5DE64C19" Ref="R?"  Part="1"
 AR Path="/5DE2A82E/5DE64C19" Ref="R95"  Part="1" 
 F 0 "R95" V 1407 5850 50  0000 C CNN
 F 1 "220" V 1316 5850 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1130 5850 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 1130 5850 50  0001 C CNN
 F 3 "~" H 1200 5850 50  0001 C CNN
 	1    1200 5850
 	0    -1   -1   0   
@@ -981,7 +980,7 @@ AR Path="/5DE1DFF6/5DE5C4BC" Ref="R?"  Part="1"
 AR Path="/5DE2A82E/5DE5C4BC" Ref="R94"  Part="1" 
 F 0 "R94" V 1407 6300 50  0000 C CNN
 F 1 "220" V 1316 6300 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1130 6300 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 1130 6300 50  0001 C CNN
 F 3 "~" H 1200 6300 50  0001 C CNN
 	1    1200 6300
 	0    -1   -1   0   
@@ -994,7 +993,7 @@ AR Path="/5DE1DFF6/5DE5C4A3" Ref="R?"  Part="1"
 AR Path="/5DE2A82E/5DE5C4A3" Ref="R93"  Part="1" 
 F 0 "R93" V 1407 6750 50  0000 C CNN
 F 1 "220" V 1316 6750 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1130 6750 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 1130 6750 50  0001 C CNN
 F 3 "~" H 1200 6750 50  0001 C CNN
 	1    1200 6750
 	0    -1   -1   0   
@@ -1007,7 +1006,7 @@ AR Path="/5DE1DFF6/5DE5C49D" Ref="R?"  Part="1"
 AR Path="/5DE2A82E/5DE5C49D" Ref="R92"  Part="1" 
 F 0 "R92" V 1407 7200 50  0000 C CNN
 F 1 "220" V 1316 7200 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1130 7200 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 1130 7200 50  0001 C CNN
 F 3 "~" H 1200 7200 50  0001 C CNN
 	1    1200 7200
 	0    -1   -1   0   

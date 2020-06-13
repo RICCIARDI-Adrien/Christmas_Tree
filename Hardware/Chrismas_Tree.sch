@@ -1,11 +1,10 @@
 EESchema Schematic File Version 4
-LIBS:Chrismas_Tree-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
-Title "Chrismas tree hierarchical view"
+Title "Christmas tree"
 Date ""
 Rev ""
 Comp "Adrien RICCIARDI"
