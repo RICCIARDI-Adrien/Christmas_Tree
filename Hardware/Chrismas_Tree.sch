@@ -33,6 +33,7 @@ F 0 "H1" H 4900 1849 50  0000 L CNN
 F 1 "Hole" H 4900 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 4800 1800 50  0001 C CNN
 F 3 "~" H 4800 1800 50  0001 C CNN
+F 4 "DNP" H 4800 1800 50  0001 C CNN "Populate"
 	1    4800 1800
 	1    0    0    -1  
 $EndComp
@@ -44,6 +45,7 @@ F 0 "H2" H 5350 1849 50  0000 L CNN
 F 1 "Hole" H 5350 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 5250 1800 50  0001 C CNN
 F 3 "~" H 5250 1800 50  0001 C CNN
+F 4 "DNP" H 5250 1800 50  0001 C CNN "Populate"
 	1    5250 1800
 	1    0    0    -1  
 $EndComp
@@ -55,6 +57,7 @@ F 0 "H3" H 5800 1849 50  0000 L CNN
 F 1 "Hole" H 5800 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 5700 1800 50  0001 C CNN
 F 3 "~" H 5700 1800 50  0001 C CNN
+F 4 "DNP" H 5700 1800 50  0001 C CNN "Populate"
 	1    5700 1800
 	1    0    0    -1  
 $EndComp
@@ -66,6 +69,7 @@ F 0 "H4" H 6250 1849 50  0000 L CNN
 F 1 "Hole" H 6250 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 6150 1800 50  0001 C CNN
 F 3 "~" H 6150 1800 50  0001 C CNN
+F 4 "DNP" H 6150 1800 50  0001 C CNN "Populate"
 	1    6150 1800
 	1    0    0    -1  
 $EndComp
@@ -77,6 +81,7 @@ F 0 "H5" H 6700 1849 50  0000 L CNN
 F 1 "Hole" H 6700 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 6600 1800 50  0001 C CNN
 F 3 "~" H 6600 1800 50  0001 C CNN
+F 4 "DNP" H 6600 1800 50  0001 C CNN "Populate"
 	1    6600 1800
 	1    0    0    -1  
 $EndComp
@@ -88,6 +93,7 @@ F 0 "H6" H 7150 1849 50  0000 L CNN
 F 1 "Hole" H 7150 1758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_4.5mm_Pad" H 7050 1800 50  0001 C CNN
 F 3 "~" H 7050 1800 50  0001 C CNN
+F 4 "DNP" H 7050 1800 50  0001 C CNN "Populate"
 	1    7050 1800
 	1    0    0    -1  
 $EndComp
@@ -189,4 +195,40 @@ F 5 "Power" H 5757 4275 50  0000 C CNN "Description"
 $EndComp
 NoConn ~ 6000 3900
 NoConn ~ 6000 4000
+$Comp
+L Mechanical:Fiducial FID1
+U 1 1 619FF64A
+P 4800 2700
+F 0 "FID1" H 4885 2746 50  0000 L CNN
+F 1 "Fiducial" H 4885 2655 50  0000 L CNN
+F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 4800 2700 50  0001 C CNN
+F 3 "~" H 4800 2700 50  0001 C CNN
+F 4 "DNP" H 4800 2700 50  0001 C CNN "Populate"
+	1    4800 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:Fiducial FID2
+U 1 1 61A00A24
+P 5550 2700
+F 0 "FID2" H 5635 2746 50  0000 L CNN
+F 1 "Fiducial" H 5635 2655 50  0000 L CNN
+F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 5550 2700 50  0001 C CNN
+F 3 "~" H 5550 2700 50  0001 C CNN
+F 4 "DNP" H 5550 2700 50  0001 C CNN "Populate"
+	1    5550 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:Fiducial FID3
+U 1 1 61A00D88
+P 6250 2700
+F 0 "FID3" H 6335 2746 50  0000 L CNN
+F 1 "Fiducial" H 6335 2655 50  0000 L CNN
+F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 6250 2700 50  0001 C CNN
+F 3 "~" H 6250 2700 50  0001 C CNN
+F 4 "DNP" H 6250 2700 50  0001 C CNN "Populate"
+	1    6250 2700
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
